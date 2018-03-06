@@ -2,7 +2,7 @@
 
 /*
  * AngularJS 1.2 and Routing The ngRoute module is no longer included in Angular after version 1.1.6. 
- * You will need to call the module and add it to the head of your document to use it.
+ * You will need to explicitly call the module and add it to the head of your document to use it.
  */
 
 //also include ngRoute for all our routing needs
@@ -12,19 +12,19 @@ var mySpringApp = angular.module('mySpringApp', [ 'ngRoute' ]);
 mySpringApp.config(function($routeProvider) {
     $routeProvider
 
-    // route for the home page
+    // route for the Home page
     .when('/', {
 	templateUrl : '/templates/home.html',
 	controller : 'mainController'
     })
 
-    // route for the contact page
+    // route for the Login page
     .when('/login', {
 	templateUrl : '/templates/login.html',
 	controller : 'loginController'
     })
 
-    // route for the about page
+    // route for the Data Capture page
     .when('/data', {
 	templateUrl : '/templates/data.html',
 	controller : 'dataController'
@@ -63,11 +63,7 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,
 
     /*
      * The authenticate() function is called when the controller is loaded to see
-     * if the user is actually already authenticated (e.g. if he had refreshed
-     * the browser in the middle of a session). We need the authenticate()
-     * function to make a remote call because the actual authentication is done
-     * by the server, and we don’t want to trust the browser to keep track of
-     * it.
+     * if the user is actually already authenticated
      */
     var authenticate = function(callback) {
 	$http.get('user').success(function(data) {
