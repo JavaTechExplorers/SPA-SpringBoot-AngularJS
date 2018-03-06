@@ -37,7 +37,10 @@ CREATE TABLE `employee` (
 - In the command line, execute the command : git clone https://github.com/JavaTechExplorers/SPA-SpringBoot-AngularJS.git
 - cd SPA-SpringBoot-AngularJS
 - gradlew build && java -jar build\libs\vicky-spring-app-0.1.0.jar
-
+- Open the URL : http://localhost:8080/
+- Login Credentials
+	- Username : admin
+	- Password : admin
 
 ## Technologies Used
 - HTML-5
