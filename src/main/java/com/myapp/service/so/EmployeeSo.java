@@ -1,12 +1,20 @@
 package com.myapp.service.so;
 
 public class EmployeeSo {
-
+	private int id;
     private String empName;
     private String empDesc;
     private String empGender;
 
-    public String getEmpName() {
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getEmpName() {
 	return empName;
     }
 

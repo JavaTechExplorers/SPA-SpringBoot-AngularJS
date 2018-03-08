@@ -35,7 +35,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
-    
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
     compile("mysql:mysql-connector-java") // mysql connector for java
     compile("org.hibernate:hibernate-validator")    
     compile("org.apache.tomcat.embed:tomcat-embed-el")

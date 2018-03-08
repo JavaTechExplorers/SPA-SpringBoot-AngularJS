@@ -35,7 +35,6 @@ public class ProcessController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<EmployeeSo> saveData(@RequestBody EmployeeSo employeeSo) throws Exception {
-
 	employeeService.save(employeeSo);
 
 	return new ResponseEntity<EmployeeSo>(employeeSo, HttpStatus.OK);
