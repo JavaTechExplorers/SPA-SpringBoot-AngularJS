@@ -35,9 +35,16 @@ public class ProcessController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<EmployeeSo> saveData(@RequestBody EmployeeSo employeeSo) throws Exception {
-	employeeService.save(employeeSo);
+    		employeeService.save(employeeSo);
 
 	return new ResponseEntity<EmployeeSo>(employeeSo, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<List<EmployeeSo>> deleteData(@RequestBody EmployeeSo employeeSo) throws Exception {
+    		employeeService.delete(employeeSo);
+    	List<EmployeeSo> empList = employeeService.getData(employeeSo);
+	return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
     }
 
 }

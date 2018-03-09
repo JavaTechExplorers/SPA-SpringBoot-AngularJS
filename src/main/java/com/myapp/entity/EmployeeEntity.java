@@ -16,7 +16,7 @@ public class EmployeeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMP_ID")
-    private int id;
+    private int empId;
 
     @Column(name = "NAME")
     private String empName;
@@ -27,15 +27,17 @@ public class EmployeeEntity implements Serializable {
     @Column(name = "GENDER")
     private String empGender;
 
-    public int getId() {
-	return id;
-    }
+    
 
-    public void setId(int id) {
-	this.id = id;
-    }
+    public int getEmpId() {
+		return empId;
+	}
 
-    public String getEmpName() {
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
 	return empName;
     }
 

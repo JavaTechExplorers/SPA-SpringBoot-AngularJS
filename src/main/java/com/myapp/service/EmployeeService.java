@@ -25,9 +25,7 @@ public class EmployeeService {
 	for (EmployeeEntity employeeEntity : empIterable) {
 
 	    EmployeeSo so = new EmployeeSo();
-	    so.setEmpName(employeeEntity.getEmpName());
-	    so.setEmpDesc(employeeEntity.getEmpDesc());
-	    so.setEmpGender(employeeEntity.getEmpGender());
+	    BeanUtils.copyProperties(so, employeeEntity);
 
 	    target.add(so);
 	}
@@ -45,5 +43,16 @@ public class EmployeeService {
 
 	return employeeSo;
     }
+    
+    public EmployeeSo delete(EmployeeSo employeeSo) throws Exception {
+
+	    	//EmployeeEntity entity = new EmployeeEntity();
+	
+	   // 	BeanUtils.copyProperties(entity, employeeSo);
+	
+	    	employeeRepository.delete(employeeSo.getEmpId());
+
+    	return employeeSo;
+        }
 
 }
