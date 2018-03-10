@@ -30,4 +30,3 @@ mySpringApp.config(function($routeProvider) {
     		controller : 'dataController'
     }).otherwise('/');
 });
-

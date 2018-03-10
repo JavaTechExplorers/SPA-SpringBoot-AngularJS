@@ -1,5 +1,5 @@
 /**
- * 
+ * Main controller for Home page
  */
 mySpringApp.controller('mainController', function($rootScope, $scope, $http,$location) {
 
