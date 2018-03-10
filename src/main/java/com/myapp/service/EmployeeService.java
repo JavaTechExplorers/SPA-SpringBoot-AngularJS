@@ -19,6 +19,8 @@ public class EmployeeService {
 
     public List<EmployeeSo> getData(EmployeeSo employeeSo) throws Exception {
 
+    	System.out.println("*** EmployeeService *** getData ****");
+    	
 	List<EmployeeSo> target = new ArrayList<>();
 
 	Iterable<EmployeeEntity> empIterable = employeeRepository.findAll();

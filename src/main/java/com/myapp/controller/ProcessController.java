@@ -1,6 +1,7 @@
 package com.myapp.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,33 +13,51 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myapp.service.EmployeeService;
+import com.myapp.service.security.UserServiceInterface;
 import com.myapp.service.so.EmployeeSo;
+import com.myapp.service.so.UserSo;
 
 @RestController
 public class ProcessController {
 
-    @Autowired
-    private EmployeeService employeeService;
+	@Autowired
+	private EmployeeService employeeService;
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-	return user;
-    }
+	@Autowired
+	private UserServiceInterface userServiceInterface;
 
-    @RequestMapping(value = "/getData", method = RequestMethod.POST)
-    public ResponseEntity<List<EmployeeSo>> getAllData(@RequestBody EmployeeSo employeeSo) throws Exception {
+	@RequestMapping("/user")
+	public Principal user(Principal user) {
+		System.out.println("*** ProcessController *** user ****");
+		return user;
+	}
 
-	List<EmployeeSo> empList = employeeService.getData(employeeSo);
-	
-	return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/getData", method = RequestMethod.POST)
+	public ResponseEntity<List<EmployeeSo>> getAllData(
+			@RequestBody EmployeeSo employeeSo) throws Exception {
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity<EmployeeSo> saveData(@RequestBody EmployeeSo employeeSo) throws Exception {
+		System.out.println("*** ProcessController *** getAllData ****");
+		List<EmployeeSo> empList = employeeService.getData(employeeSo);
+		return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
 
-	employeeService.save(employeeSo);
+	}
 
-	return new ResponseEntity<EmployeeSo>(employeeSo, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public ResponseEntity<EmployeeSo> saveData(
+			@RequestBody EmployeeSo employeeSo) throws Exception {
+
+		System.out.println("*** ProcessController *** saveData ****");
+		employeeService.save(employeeSo);
+		return new ResponseEntity<EmployeeSo>(employeeSo, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+	public ResponseEntity<UserSo> createAccount(@RequestBody UserSo userSo)
+			throws Exception {
+
+		System.out.println("*** ProcessController *** createAccount ****");
+		userServiceInterface.save(userSo);
+		return new ResponseEntity<UserSo>(userSo, HttpStatus.OK);
+	}
 
 }

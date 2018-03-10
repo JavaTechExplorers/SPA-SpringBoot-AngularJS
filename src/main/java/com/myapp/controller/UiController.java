@@ -6,14 +6,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UiController {
 
-    @RequestMapping("/")
-    public String index() {
-	return "index";
-    }
+	@RequestMapping("/")
+	public String index() {
+		System.out.println("*** UiController *** index ****");
+		return "index";
+	}
 
-    @RequestMapping("/login")
-    public String login() {
-	return "login";
-    }
+	@RequestMapping("/login")
+	public String login() {
+		System.out.println("*** UiController *** login ****");
+		return "login";
+	}
+
+	@RequestMapping("/createAccount")
+	public String createAccount() {
+		System.out.println("*** UiController *** createAccount ****");
+		return "createAccount";
+	}
 
 }

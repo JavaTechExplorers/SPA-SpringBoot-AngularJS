@@ -23,6 +23,12 @@ mySpringApp.config(function($routeProvider) {
 	templateUrl : '/templates/login.html',
 	controller : 'loginController'
     })
+    
+     // route for the Create An Account page
+    .when('/createAccount', {
+	templateUrl : '/templates/createAccount.html',
+	controller : 'createAccountController'
+    })
 
     // route for the Data Capture page
     .when('/data', {
@@ -90,7 +96,7 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,
 		"content-type" : "application/x-www-form-urlencoded"
 	    }
 	}).success(function(data) {
-
+		//TODO: $rootScope.authenticated who is setting the variable
 	    authenticate(function() {
 		if ($rootScope.authenticated) {
 		    $location.path("/");
@@ -109,6 +115,31 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,
 
 });
 
+
+/*
+ * Create An Account Controller Logic
+ */
+//TODO:how to pass data 
+mySpringApp.controller('createAccountController', function($rootScope, $scope, $http,
+	$location) {
+	
+	 var urlBase = "";
+
+	$http.defaults.headers.post["Content-Type"] = "application/json";
+
+    $scope.createAccount = function() {
+	$http.post(urlBase + '/createAccount', {
+		username : $scope.username,
+		password : $scope.password
+	}).success(
+		function(data, status, headers) {
+			 $location.path("/");
+		});
+    }
+    //TODO: how to handle validations 
+});
+
+
 /*
  * Data controller where Search and CRUD operation are performed
  */
@@ -126,7 +157,7 @@ mySpringApp
 
 	    function listAllEmployees() {
 		$http.post(urlBase + '/getData', {
-		    empName : 'Vignesh',
+		    empName : 'AAAA',
 		    empGender : 'Male'
 		}).success(
 			function(data, status, headers) {
