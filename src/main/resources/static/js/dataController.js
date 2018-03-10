@@ -1,5 +1,5 @@
 /**
- * 
+ * Controller for CRUD operations
  */
 mySpringApp.controller('dataController',function($scope, $http) {
 

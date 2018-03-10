@@ -1,5 +1,5 @@
 /**
- * 
+ * Login controller
  */
 mySpringApp.controller('loginController', function($rootScope, $scope, $http,$location) {
 
