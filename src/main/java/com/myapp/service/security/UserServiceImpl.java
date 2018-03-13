@@ -10,8 +10,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ValidationUtils;
 
-import com.myapp.entity.RoleEntity;
-import com.myapp.entity.UserEntity;
+import com.myapp.entity.SysRole;
+import com.myapp.entity.SysUser;
 import com.myapp.repository.UserRepository;
 import com.myapp.service.so.UserSo;
 import com.myapp.service.validator.UserValidator;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
 		System.out.println("*** UserServiceImpl *** findByUsername ****");
 
-		UserEntity userEntity = userRepository.findByUsername(username);
+		SysUser userEntity = userRepository.findByUsername(username);
 		if (userEntity != null) {
 			UserSo userSo = new UserSo();
 			userSo.setUsername(username);
@@ -47,27 +47,27 @@ public class UserServiceImpl implements UserServiceInterface {
 
 		// TODO: what to do validations ?
 
-		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(userSo,
-				"userSo");
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(userSo, "userSo");
 		ValidationUtils.invokeValidator(userValidator, userSo, errors);
 		if (errors.getErrorCount() > 0) {
 			System.out.println("Validations error occurred. Account is not created.");
-			 return null;
+			return null;
 		}
 
 		if (userSo != null && !StringUtils.isEmpty(userSo.getUsername())
 				&& !StringUtils.isEmpty(userSo.getPassword())) {
 
-			UserEntity userEntity = new UserEntity();
-			userEntity.setUsername(userSo.getUsername());
-			userEntity.setPassword(
-					bCryptPasswordEncoder.encode(userSo.getPassword()));
+			SysUser userEntity = new SysUser();
+			userEntity.setUserName(userSo.getUsername());
+			userEntity.setUserPassword(bCryptPasswordEncoder.encode(userSo.getPassword()));
 
-			RoleEntity roleEntity = new RoleEntity();
+			SysRole roleEntity = new SysRole();
 			roleEntity.setName("ADMIN");
 			roleEntity.setUserEntity(userEntity);
-			List<RoleEntity> roleEntityList = new ArrayList<>();
+			
+			List<SysRole> roleEntityList = new ArrayList<>();
 			roleEntityList.add(roleEntity);
+			
 			userEntity.setRoleEntityList(roleEntityList);
 			userEntity = userRepository.save(userEntity);
 

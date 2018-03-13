@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.security.core.userdetails.User;
 
 import com.myapp.entity.RoleEntity;
 import com.myapp.entity.UserEntity;
@@ -25,11 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		System.out.println(
-				"*** UserDetailsServiceImpl *** loadUserByUsername ****");
+		System.out.println("*** UserDetailsServiceImpl *** loadUserByUsername ****");
 
 		if (!StringUtils.isEmpty(username)) {
 
@@ -38,16 +37,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			if (userEntity != null) {
 
 				Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+
 				for (RoleEntity roleEntity : userEntity.getRoleEntityList()) {
-					grantedAuthorities.add(
-							new SimpleGrantedAuthority(roleEntity.getName()));
+					grantedAuthorities.add(new SimpleGrantedAuthority(roleEntity.getName()));
 				}
-				return new org.springframework.security.core.userdetails.User(
-						userEntity.getUsername(), userEntity.getPassword(),
-						grantedAuthorities);
+
+				return new User(userEntity.getUsername(), userEntity.getPassword(), grantedAuthorities);
 			}
+			
 			throw new UsernameNotFoundException("Username not found");
 		}
+		
 		throw new UsernameNotFoundException("Username is mandatory");
 	}
 }

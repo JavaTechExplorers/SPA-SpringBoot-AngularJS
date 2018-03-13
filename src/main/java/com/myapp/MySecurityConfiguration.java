@@ -25,25 +25,30 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("*** MySecurityConfiguration *** configure ****");
-		http.authorizeRequests()
-				.antMatchers("/", "/index", "/login", "/createAccount",
-						"/templates/**", "/resources/**", "/js/**", "/lib/**")
-				.permitAll().anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/").and().logout()
-				.logoutUrl("/logout");
 
+		http.authorizeRequests()
+				.antMatchers("/", "/index", "/login", "/createAccount", "/templates/**", "/resources/**", "/js/**",
+						"/lib/**")
+				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/")
+				.and().logout().logoutUrl("/logout");
+
+		// CSRF is disabled. You can enable by introducing CSRF filter.
 		http.csrf().disable();
 	}
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth)
-			throws Exception {
-		System.out.println(
-				"*** MySecurityConfiguration *** configureGlobal ****");
-		/* The below is for in-memory authentication */
-		// auth.inMemoryAuthentication().withUser("admin").password("admin").roles("USER");
-		 auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		System.out.println("*** MySecurityConfiguration *** configureGlobal ****");
 
+		/*
+		 * 1. The below is for in-memory authentication for predefined user
+		 * name/password
+		 * 
+		 * auth.inMemoryAuthentication().withUser("admin").password("admin").roles(
+		 * "USER");
+		 */
+
+		// 2. Authentication based on Database
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
-
 }

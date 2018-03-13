@@ -7,5 +7,4 @@ public interface UserServiceInterface {
 	UserSo findByUsername(String username);
 	
 	UserSo save(UserSo userSo);
-
 }
