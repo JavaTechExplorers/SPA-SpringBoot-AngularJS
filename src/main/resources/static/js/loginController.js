@@ -1,6 +1,7 @@
 /**
  * Login controller
  */
+var mySpringApp = angular.module('mySpringApp', [ 'ngRoute','oc.lazyLoad' ]);
 mySpringApp.controller('loginController', function($rootScope, $scope, $http,$location) {
 
     /*

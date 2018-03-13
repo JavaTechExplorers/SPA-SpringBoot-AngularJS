@@ -6,7 +6,9 @@
  */
 
 //also include ngRoute for all our routing needs
-var mySpringApp = angular.module('mySpringApp', [ 'ngRoute' ]);
+
+
+var mySpringApp = angular.module('mySpringApp', [ 'ngRoute','oc.lazyLoad' ]);
 
 //configure our routes
 mySpringApp.config(function($routeProvider) {
@@ -21,12 +23,23 @@ mySpringApp.config(function($routeProvider) {
     // route for the contact page
     .when('/login', {
     		templateUrl : '/templates/login.html',
-    		controller : 'loginController'
+    		controller : 'loginController',
+    		resolve : {
+    			js : ['$ocLazyLoad','$http',function($ocLazyLoad,$http){
+    				return $ocLazyLoad.load('/js/loginController.js');
+    			}]
+    		}
     })
 
     // route for the about page
     .when('/data', {
     		templateUrl : '/templates/data.html',
-    		controller : 'dataController'
+    		controller : 'dataController',
+    		resolve : {
+    			js : ['$ocLazyLoad','$http',function($ocLazyLoad,$http){
+    				return $ocLazyLoad.load('/js/dataController.js');
+    			}]
+    		}
     }).otherwise('/');
 });
+

@@ -1,6 +1,7 @@
 /**
  * Controller for CRUD operations
  */
+var mySpringApp = angular.module('mySpringApp', [ 'ngRoute','oc.lazyLoad' ]);
 mySpringApp.controller('dataController',function($scope, $http) {
 
 	    $scope.message = 'Data Page! We are maintaining the Person information!';
