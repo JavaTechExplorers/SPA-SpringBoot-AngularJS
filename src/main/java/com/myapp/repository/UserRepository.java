@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.myapp.entity.SysUser;
 
 public interface UserRepository extends JpaRepository<SysUser, Integer> {
-	SysUser findByUsername(String username);
+	SysUser findByUserName(String userName);
+	
+	SysUser findByMailId(String mailId);
 }

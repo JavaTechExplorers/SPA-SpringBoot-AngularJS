@@ -122,18 +122,23 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,
 //TODO:how to pass data 
 mySpringApp.controller('createAccountController', function($rootScope, $scope, $http,
 	$location) {
-	
-	 var urlBase = "";
 
-	$http.defaults.headers.post["Content-Type"] = "application/json";
+    var urlBase = "";
+
+    $http.defaults.headers.post["Content-Type"] = "application/json";
 
     $scope.createAccount = function() {
 	$http.post(urlBase + '/createAccount', {
-		username : $scope.username,
-		password : $scope.password
+	    userName : $scope.userName,
+	    userPassword : $scope.userPassword,
+	    firstName : $scope.firstName,
+	    lastName : $scope.lastName,
+	    mailId : $scope.mailId,
+	    phoneNum : $scope.phoneNum
 	}).success(
 		function(data, status, headers) {
-			 $location.path("/");
+		    alert('User account created successfully');
+		    // $location.path("/");
 		});
     }
     //TODO: how to handle validations 

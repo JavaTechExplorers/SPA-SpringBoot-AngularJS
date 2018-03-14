@@ -6,4 +6,5 @@ import com.myapp.entity.SysRole;
 
 public interface RoleRepository extends JpaRepository<SysRole, Integer> {
 
+	SysRole findByRoleId(Integer roleId);
 }

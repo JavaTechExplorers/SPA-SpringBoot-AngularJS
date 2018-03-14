@@ -55,7 +55,13 @@ public class ProcessController {
 			throws Exception {
 
 		System.out.println("*** ProcessController *** createAccount ****");
-		userServiceInterface.save(userSo);
+		UserSo responseSo = userServiceInterface.save(userSo);
+		if (responseSo == null) {
+			
+			//TODO: Change this
+			return new ResponseEntity<UserSo>(userSo, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		return new ResponseEntity<UserSo>(userSo, HttpStatus.OK);
 	}
 

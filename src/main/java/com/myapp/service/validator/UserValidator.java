@@ -29,16 +29,13 @@ public class UserValidator implements Validator {
 
 		UserSo userSo = (UserSo) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
-				"User name cannot be empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "User name cannot be empty");
 
-		if (userServiceInterface
-				.findByUsername(userSo.getUsername()) != null) {
-			errors.rejectValue("username", "Username already exist");
+		if (userServiceInterface.findByUsername(userSo.getUserName()) != null) {
+			errors.rejectValue("userName", "Username already exist");
 		}
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-				"Password cannot be empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userPassword", "Password cannot be empty");
 
 	}
 

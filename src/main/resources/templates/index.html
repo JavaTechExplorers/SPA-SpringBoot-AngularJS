@@ -27,8 +27,7 @@
 
 					<li  data-ng-class="{active : isLinkActive('/login')}" data-ng-show="!authenticated"><a href="#/login"><i class="fa fa-home"></i> Login</a></li>
 					
-					<!-- TODO: ng-show attribute i will add it later..i need to check the functionality once -->
-					<li  data-ng-class="{active : isLinkActive('/createAccount')}" ><a href="#/createAccount"><i class="fa fa-home"></i> Create Account</a></li>
+					<li  data-ng-class="{active : isLinkActive('/createAccount')}" data-ng-show="!authenticated"><a href="#/createAccount"><i class="fa fa-home"></i> Create Account</a></li>
 
 					<li  data-ng-class="{active : isLinkActive('/data')}" data-ng-show="authenticated" ><a href="#/data"><i class="fa fa-shield"></i> Data Capture</a></li>
 
