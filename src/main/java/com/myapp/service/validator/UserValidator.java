@@ -29,6 +29,10 @@ public class UserValidator implements Validator {
 
 		UserSo userSo = (UserSo) target;
 
+		if (userSo.getUserName() == null) {
+			errors.rejectValue("userName", "Username is empty");
+		}
+
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "User name cannot be empty");
 
 		if (userServiceInterface.findByUsername(userSo.getUserName()) != null) {
@@ -36,7 +40,5 @@ public class UserValidator implements Validator {
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userPassword", "Password cannot be empty");
-
 	}
-
 }

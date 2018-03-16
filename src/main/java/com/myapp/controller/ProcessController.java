@@ -55,14 +55,14 @@ public class ProcessController {
 			throws Exception {
 
 		System.out.println("*** ProcessController *** createAccount ****");
-		UserSo responseSo = userServiceInterface.save(userSo);
-		if (responseSo == null) {
-			
-			//TODO: Change this
-			return new ResponseEntity<UserSo>(userSo, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
+		userServiceInterface.save(userSo);
 		return new ResponseEntity<UserSo>(userSo, HttpStatus.OK);
 	}
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<List<EmployeeSo>> deleteData(@RequestBody EmployeeSo employeeSo) throws Exception {
+    		employeeService.delete(employeeSo);
+    	List<EmployeeSo> empList = employeeService.getData(employeeSo);
+	return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
+    }
 }

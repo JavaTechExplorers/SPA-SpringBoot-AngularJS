@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public UserSo findByUsername(String userName) {
 
-		System.out.println("*** UserServiceImpl *** findByUsername ****");
-
 		SysUser userEntity = userRepository.findByUserName(userName);
 		if (userEntity != null) {
 

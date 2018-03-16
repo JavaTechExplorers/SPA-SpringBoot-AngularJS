@@ -28,7 +28,7 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				.antMatchers("/", "/index", "/login", "/createAccount", "/templates/**", "/resources/**", "/js/**",
-						"/lib/**")
+						"/lib/**", "/css/**")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/")
 				.and().logout().logoutUrl("/logout");
 

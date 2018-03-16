@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-		System.out.println("*** UserDetailsServiceImpl *** loadUserByUsername ****");
+		System.out.println("********* UserDetailsServiceImpl:loadUserByUsername(): Username = " + userName);
 
 		if (!StringUtils.isEmpty(userName)) {
 
@@ -58,10 +58,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 				return new User(userEntity.getUserName(), userEntity.getUserPassword(), grantedAuthorities);
 			}
-
+			System.err.println("Username = " + userName + " not found in database");
+			
 			throw new UsernameNotFoundException("Username not found");
 		}
 
+		System.err.println("Username is mandatory");
 		throw new UsernameNotFoundException("Username is mandatory");
 	}
 }

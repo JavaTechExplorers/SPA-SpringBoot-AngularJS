@@ -6,13 +6,15 @@
  */
 
 //also include ngRoute for all our routing needs
-var mySpringApp = angular.module('mySpringApp', [ 'ngRoute' ]);
+
+
+var mySpringApp = angular.module('mySpringApp', [ 'ngRoute','oc.lazyLoad' ]);
 
 //configure our routes
 mySpringApp.config(function($routeProvider) {
     $routeProvider
 
-    // route for the Home page
+    // route for the home page
     .when('/', {
 	templateUrl : '/templates/home.html',
 	controller : 'mainController'
@@ -21,190 +23,33 @@ mySpringApp.config(function($routeProvider) {
     // route for the Login page
     .when('/login', {
 	templateUrl : '/templates/login.html',
-	controller : 'loginController'
+	controller : 'loginController',
+	resolve : {
+	    js : ['$ocLazyLoad','$http',function($ocLazyLoad,$http){
+		return $ocLazyLoad.load('/js/loginController.js');
+	    }]
+	}
     })
-    
-     // route for the Create An Account page
+
+    // route for the Create An Account page
     .when('/createAccount', {
-	templateUrl : '/templates/createAccount.html',
-	controller : 'createAccountController'
+	templateUrl : '/templates/signup.html',
+	controller : 'signupController',
+	resolve : {
+	    js : ['$ocLazyLoad','$http',function($ocLazyLoad,$http){
+		return $ocLazyLoad.load('/js/signupController.js');
+	    }]
+	}
     })
 
     // route for the Data Capture page
     .when('/data', {
 	templateUrl : '/templates/data.html',
-	controller : 'dataController'
+	controller : 'dataController',
+	resolve : {
+	    js : ['$ocLazyLoad','$http',function($ocLazyLoad,$http){
+		return $ocLazyLoad.load('/js/dataController.js');
+	    }]
+	}
     }).otherwise('/');
 });
-
-//create the controller and inject Angular's $scope
-mySpringApp.controller('mainController', function($rootScope, $scope, $http,
-	$location) {
-
-    $scope.message = 'Sample Single Page application development using Angular 1.x and Spring Boot';
-
-    $scope.logout = function() {
-
-	$location.path("/");
-
-	$http.post('logout', {}).success(function() {
-	    $rootScope.authenticated = false;
-	    $location.path("/");
-	}).error(function(data) {
-	    $rootScope.authenticated = false;
-	});
-    }
-
-    $scope.isLinkActive = function(url) {
-	return url === $location.path();
-    }
-
-});
-
-/*
- * Login Controller Logic
- */
-mySpringApp.controller('loginController', function($rootScope, $scope, $http,
-	$location) {
-
-    /*
-     * The authenticate() function is called when the controller is loaded to see
-     * if the user is actually already authenticated
-     */
-    var authenticate = function(callback) {
-	$http.get('user').success(function(data) {
-	    if (data.name) {
-		$rootScope.authenticated = true;
-	    } else {
-		$rootScope.authenticated = false;
-	    }
-	    callback && callback();
-	}).error(function() {
-	    $rootScope.authenticated = false;
-	    callback && callback();
-	});
-    }
-
-    authenticate();
-
-    $scope.credentials = {};
-
-    $scope.login = function() {
-
-	$http.post('login', $.param($scope.credentials), {
-	    headers : {
-		"content-type" : "application/x-www-form-urlencoded"
-	    }
-	}).success(function(data) {
-		//TODO: $rootScope.authenticated who is setting the variable
-	    authenticate(function() {
-		if ($rootScope.authenticated) {
-		    $location.path("/");
-		    $scope.error = false;
-		} else {
-		    $location.path("/login");
-		    $scope.error = true;
-		}
-	    });
-	}).error(function(data) {
-	    $location.path("/login");
-	    $scope.error = true;
-	    $rootScope.authenticated = false;
-	})
-    };
-
-});
-
-
-/*
- * Create An Account Controller Logic
- */
-//TODO:how to pass data 
-mySpringApp.controller('createAccountController', function($rootScope, $scope, $http,
-	$location) {
-
-    var urlBase = "";
-
-    $http.defaults.headers.post["Content-Type"] = "application/json";
-
-    $scope.createAccount = function() {
-	$http.post(urlBase + '/createAccount', {
-	    userName : $scope.userName,
-	    userPassword : $scope.userPassword,
-	    firstName : $scope.firstName,
-	    lastName : $scope.lastName,
-	    mailId : $scope.mailId,
-	    phoneNum : $scope.phoneNum
-	}).success(
-		function(data, status, headers) {
-		    alert('User account created successfully');
-		    // $location.path("/");
-		});
-    }
-    //TODO: how to handle validations 
-});
-
-
-/*
- * Data controller where Search and CRUD operation are performed
- */
-mySpringApp
-.controller(
-	'dataController',
-	function($scope, $http) {
-
-	    $scope.message = 'Data Page! We are maintaining the Person information!';
-
-	    var urlBase = "";
-	    $scope.selection = [];
-	    $scope.statuses = [ 'Male', 'Female' ];
-	    $http.defaults.headers.post["Content-Type"] = "application/json";
-
-	    function listAllEmployees() {
-		$http.post(urlBase + '/getData', {
-		    empName : 'AAAA',
-		    empGender : 'Male'
-		}).success(
-			function(data, status, headers) {
-			    $scope.dataList = data;
-			});
-	    }
-
-	    listAllEmployees();
-
-	    $scope.refresh = function() {
-		listAllEmployees();
-	    }
-	    
-	    // add a new task
-	    $scope.save = function() {
-
-		if ($scope.empName == undefined
-			|| $scope.empDesc == undefined
-			|| $scope.empGender == undefined
-			|| $scope.empName == "" || $scope.empDesc == ""
-			|| $scope.empGender == "") {
-
-		    alert('Insufficient Data! Please provide values for all Employee fields');
-		} else {
-
-		    $http.post(urlBase + '/save', {
-			empName : $scope.empName,
-			empDesc : $scope.empDesc,
-			empGender : $scope.empGender
-		    }).success(
-			    function(data, status, headers) {
-				alert('Employee details added');
-				listAllEmployees();
-			    });
-		}
-	    };
-
-	    // add a new task
-	    $scope.clear = function() {
-		$scope.empName = "";
-		$scope.empDesc = "";
-		$scope.empGender = "";
-	    };
-
-	});

@@ -1,49 +1,56 @@
-<div data-ng-show="authenticated" data-ng-app="mySpringApp"
+<div data-ng-show="authenticated" 
 	data-ng-controller="dataController">
 	<h3>Enter Details:</h3>
 
-	<div class="">
-		<table class="">
-			<tr>
-				<td>Name:</td>
-				<td><input type="text" data-ng-model="empName" /></td>
-			</tr>
-			<tr>
-				<td>Job Description:</td>
-				<td><input type="text" data-ng-model="empDesc" /></td>
-			</tr>
-			<tr>
-				<td>Gender:</td>
-				<td><select data-ng-model="empGender"
-					data-ng-options="status as status for status in statuses">
-				</select></td>
-			</tr>
-			<tr>
-				<td>
-					<br/>
-					<button data-ng-click="save()" class="">Save</button>
-					&nbsp;
-					<button data-ng-click="clear()" class="">Reset</button>
-					&nbsp;
-					<button data-ng-click="refresh()" class="">Refresh</button>
-				</td>
-			</tr>
-		</table>
+	<form>
+ 
+	  <div class="form-group row ">
+	    <label for="empName" class="col-sm-2 col-form-label">Name : </label>
+	    <div class="col-sm-2">
+	      <input type="text" class="form-control" data-ng-model="empName" />
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="empName" class="col-sm-2 col-form-label">Job Description : </label>
+	    <div class="col-sm-2">
+	      <input type="text" class="form-control" data-ng-model="empDesc" />
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="empName" class="col-sm-2 col-form-label">Gender : </label>
+	    <div class="col-sm-2">
+	      <select data-ng-model="empGender" class="form-control" data-ng-options="status as status for status in statuses"></select>
+	    </div>
+	  </div>
+	  <button type="button" data-ng-click="save()" class="btn btn-primary">Save</button>
+	  <button type="button" data-ng-click="clear()" class="btn btn-primary">Clear</button>
+	  <button type="button" data-ng-click="refresh()" class="btn btn-primary">Refresh</button>
+</form>
+	
 
 		<br />
 		<h3>Search Results:</h3>
-		<table class="table table-bordered">
-			<tr>
-				<th>Name</th>
-				<th>Job Description</th>
-				<th>Gender</th>
-			</tr>
-			<tr data-ng-repeat="data in dataList" class="success">
-				<td>{{ data.empName }}</td>
+		<table class="table table-striped">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Name</th>
+		      <th scope="col">Job Description</th>
+		      <th scope="col">Gender</th>
+		      <th scope="col">Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr data-ng-repeat="data in dataList track by $index">
+		      	<td>{{ data.empName }}</td>
 				<td>{{ data.empDesc }}</td>
 				<td>{{ data.empGender }}</td>
-			</tr>
+				<td>
+					<button type="button" class="btn btn-xs btn-default command-edit" data-ng-click="update(data)" ><span class="glyphicon glyphicon-edit"></span></button> 
+                 	<button type="button" class="btn btn-xs btn-default command-delete" data-ng-click="remove(data)" ><span class="glyphicon glyphicon-trash"></span></button>
+                 </td>	
+		    </tr>
+		    
+		  </tbody>
 		</table>
-	</div>
 
 </div>
