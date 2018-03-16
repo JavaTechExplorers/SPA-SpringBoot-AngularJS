@@ -27,13 +27,13 @@ public class UserServiceImpl implements UserServiceInterface {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	public UserSo findByUsername(String userName) {
+	public UserSo findByUsername(String username) {
 
-		SysUser userEntity = userRepository.findByUserName(userName);
+		SysUser userEntity = userRepository.findByUsername(username);
 		if (userEntity != null) {
 
 			UserSo userSo = new UserSo();
-			userSo.setUserName(userName);
+			userSo.setUsername(username);
 			return userSo;
 		}
 		return null;
@@ -51,12 +51,12 @@ public class UserServiceImpl implements UserServiceInterface {
 			return null;
 		}
 
-		if (userSo != null && !StringUtils.isEmpty(userSo.getUserName())
-				&& !StringUtils.isEmpty(userSo.getUserPassword())) {
+		if (userSo != null && !StringUtils.isEmpty(userSo.getUsername())
+				&& !StringUtils.isEmpty(userSo.getPassword())) {
 
 			SysUser userEntity = new SysUser();
-			userEntity.setUserName(userSo.getUserName());
-			userEntity.setUserPassword(bCryptPasswordEncoder.encode(userSo.getUserPassword()));
+			userEntity.setUsername(userSo.getUsername());
+			userEntity.setPassword(bCryptPasswordEncoder.encode(userSo.getPassword()));
 			userEntity.setFirstName(userSo.getFirstName());
 			userEntity.setLastName(userSo.getLastName());
 			userEntity.setMailId(userSo.getMailId());

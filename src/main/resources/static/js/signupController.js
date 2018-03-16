@@ -10,8 +10,8 @@ mySpringApp.controller('signupController', function($rootScope, $scope, $http,$l
 
     $scope.createAccount = function() {
 	$http.post(urlBase + '/createAccount', {
-	    userName : $scope.userName,
-	    userPassword : $scope.userPassword,
+	    username : $scope.username,
+	    password : $scope.password,
 	    firstName : $scope.firstName,
 	    lastName : $scope.lastName,
 	    mailId : $scope.mailId,

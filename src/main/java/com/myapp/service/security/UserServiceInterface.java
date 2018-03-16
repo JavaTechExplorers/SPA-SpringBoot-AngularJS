@@ -4,7 +4,7 @@ import com.myapp.service.so.UserSo;
 
 public interface UserServiceInterface {
 
-	UserSo findByUsername(String userName);
+	UserSo findByUsername(String username);
 	
 	UserSo save(UserSo userSo);
 }

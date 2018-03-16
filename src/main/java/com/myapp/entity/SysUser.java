@@ -41,10 +41,10 @@ public class SysUser implements Serializable {
 	private String phoneNum;
 
 	@Column(name="USER_NAME", nullable=false, length=10)
-	private String userName;
+	private String username;
 
 	@Column(name="USER_PASSWORD", nullable=false, length=255)
-	private String userPassword;
+	private String password;
 
 	//bi-directional many-to-one association to SysUserRoleMap
 	@OneToMany(mappedBy="sysUser")
@@ -109,20 +109,20 @@ public class SysUser implements Serializable {
 		this.phoneNum = phoneNum;
 	}
 
-	public String getUserName() {
-		return this.userName;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getUserPassword() {
-		return this.userPassword;
+	public String getPassword() {
+		return this.password;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<SysUserRoleMap> getSysUserRoleMaps() {
