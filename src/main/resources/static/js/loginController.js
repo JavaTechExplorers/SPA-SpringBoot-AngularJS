@@ -33,7 +33,7 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
 
     $scope.login = function() {
 
-	alert($scope.credentials);
+	// alert($scope.credentials);
 	
 	$http.post('login', $.param($scope.credentials), {
 	    headers : {

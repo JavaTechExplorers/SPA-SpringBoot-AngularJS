@@ -50,7 +50,7 @@ public class ProcessController {
 		return new ResponseEntity<EmployeeSo>(employeeSo, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/createAccount1", method = RequestMethod.POST)
 	public ResponseEntity<UserSo> createAccount(@RequestBody UserSo userSo)
 			throws Exception {
 
