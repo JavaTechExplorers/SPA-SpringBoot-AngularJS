@@ -15,6 +15,7 @@ import com.myapp.service.EmployeeService;
 import com.myapp.service.security.UserServiceInterface;
 import com.myapp.service.so.EmployeeSo;
 import com.myapp.service.so.UserSo;
+import com.myapp.service.validator.MyValidationException;
 
 @RestController
 public class ProcessController {
@@ -32,8 +33,7 @@ public class ProcessController {
 	}
 
 	@RequestMapping(value = "/getData", method = RequestMethod.POST)
-	public ResponseEntity<List<EmployeeSo>> getAllData(
-			@RequestBody EmployeeSo employeeSo) throws Exception {
+	public ResponseEntity<List<EmployeeSo>> getAllData(@RequestBody EmployeeSo employeeSo) throws Exception {
 
 		System.out.println("*** ProcessController *** getAllData ****");
 		List<EmployeeSo> empList = employeeService.getData(employeeSo);
@@ -42,8 +42,7 @@ public class ProcessController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ResponseEntity<EmployeeSo> saveData(
-			@RequestBody EmployeeSo employeeSo) throws Exception {
+	public ResponseEntity<EmployeeSo> saveData(@RequestBody EmployeeSo employeeSo) throws Exception {
 
 		System.out.println("*** ProcessController *** saveData ****");
 		employeeService.save(employeeSo);
@@ -51,18 +50,18 @@ public class ProcessController {
 	}
 
 	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
-	public ResponseEntity<UserSo> createAccount(@RequestBody UserSo userSo)
-			throws Exception {
+	public ResponseEntity<UserSo> createAccount(@RequestBody UserSo userSo) throws MyValidationException {
 
 		System.out.println("*** ProcessController *** createAccount ****");
 		userServiceInterface.save(userSo);
+		
 		return new ResponseEntity<UserSo>(userSo, HttpStatus.OK);
 	}
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity<List<EmployeeSo>> deleteData(@RequestBody EmployeeSo employeeSo) throws Exception {
-    		employeeService.delete(employeeSo);
-    	List<EmployeeSo> empList = employeeService.getData(employeeSo);
-	return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<List<EmployeeSo>> deleteData(@RequestBody EmployeeSo employeeSo) throws Exception {
+		employeeService.delete(employeeSo);
+		List<EmployeeSo> empList = employeeService.getData(employeeSo);
+		return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
+	}
 }

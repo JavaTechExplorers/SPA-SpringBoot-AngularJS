@@ -23,13 +23,14 @@ import com.myapp.service.validator.MyValidationException;
 public class MyControllerExceptionHandler {
 
 	@ExceptionHandler(MyValidationException.class)
-	public ResponseEntity handleException(MyValidationException e) {
+	public ResponseEntity<ErrorSo> handleException(MyValidationException e) {
 
+		System.out.println("******************** MyControllerExceptionHandler *******************");
 		ErrorSo errorSo = new ErrorSo();
-		errorSo.setErrorsExists(true);
+		errorSo.setErrorsFound("Y");
 
 		Errors errors = e.getErrors();
-		if (errors.hasErrors()) {
+		if (errors != null && errors.hasErrors()) {
 
 			List<ObjectError> erros = errors.getAllErrors();
 			for (ObjectError objectError : erros) {
@@ -39,14 +40,13 @@ public class MyControllerExceptionHandler {
 					FieldError fieldError = (FieldError) objectError;
 					if (fieldError != null && fieldError.getCodes() != null) {
 
-						errorSo.getErrorMessagesMap().put(fieldError.getField(),
-								fieldError.getCodes()[fieldError.getCodes().length - 1]);
+						errorSo.getErrorMessagesMap().put(fieldError.getField(), fieldError.getCodes()[fieldError.getCodes().length - 1]);
 					}
 				}
 
 			}
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(errorSo);
+		return new ResponseEntity<ErrorSo>(errorSo, HttpStatus.OK);
 	}
 }

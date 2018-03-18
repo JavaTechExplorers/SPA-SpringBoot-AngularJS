@@ -12,6 +12,7 @@ import org.springframework.validation.ValidationUtils;
 import com.myapp.entity.SysUser;
 import com.myapp.repository.UserRepository;
 import com.myapp.service.so.UserSo;
+import com.myapp.service.validator.MyValidationException;
 import com.myapp.service.validator.UserValidator;
 
 @Component
@@ -40,15 +41,18 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 
 	@Override
-	public UserSo save(UserSo userSo){
-
-		// TODO: what to do validations ?
+	public UserSo save(UserSo userSo) throws MyValidationException {
 
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(userSo, "userSo");
 		ValidationUtils.invokeValidator(userValidator, userSo, errors);
 		if (errors.getErrorCount() > 0) {
 			System.out.println("Validations error occurred. Account is not created.");
-			return null;
+
+			MyValidationException excep = new MyValidationException();
+			excep.setErrorsExists(true);
+			excep.setErrors(errors);
+
+			throw excep;
 		}
 
 		if (userSo != null && !StringUtils.isEmpty(userSo.getUsername())
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserServiceInterface {
 			userEntity.setPhoneNum(userSo.getPhoneNum());
 			userEntity.setCreatedBy("GUEST");
 			userEntity.setCreatedDate(new Date());
-						
+
 			// List<SysUserRoleMap> sysUserRoleMaps = new ArrayList<>();
 			// SysUserRoleMap map = new SysUserRoleMap();
 			// map.setRoleId();

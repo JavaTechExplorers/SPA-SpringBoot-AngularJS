@@ -12,7 +12,7 @@ var mySpringApp = angular.module('mySpringApp', [ 'ngRoute','oc.lazyLoad' ]);
 
 mySpringApp.config(['$locationProvider', function($locationProvider) {
     $locationProvider.hashPrefix('');
-  }]);
+}]);
 
 //configure our routes
 mySpringApp.config(function($routeProvider) {

@@ -14,24 +14,24 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
      * it.
      */
     var authenticate = function(callback) {
-	
+
 	// alert('Inside authenticate()');
-	
+
 	$http.get('user').then(function(response) {
-	    
+
 	    if (response.data.name) {
 		$rootScope.authenticated = true;
 	    } else {
 		$rootScope.authenticated = false;
 	    }
-	    
+
 	    // If call back exists, then call the function
 	    callback && callback();
-	    
+
 	}),function (error){
-	    
+
 	    $rootScope.authenticated = false;
-	    
+
 	    callback && callback();
 	};
     }
@@ -43,15 +43,15 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
     $scope.login = function() {
 
 	//alert('Inside Login method : username : ' + $scope.credentials.username + " : " + $scope.credentials.password);
-	
+
 	$http.post('login', $.param($scope.credentials), {
 	    headers : {
 		"content-type" : "application/x-www-form-urlencoded"
 	    }
 	}).then(function(response) {
-	    
+
 	    // alert('login response = ' + username);
-	    
+
 	    authenticate(function() {
 		if ($rootScope.authenticated) {
 		    $location.path("/");
@@ -62,7 +62,7 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
 		}
 	    });
 	}),function (error){
-	    
+
 	    $location.path("/login");
 	    $scope.error = true;
 	    $rootScope.authenticated = false;

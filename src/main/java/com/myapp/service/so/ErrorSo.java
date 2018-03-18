@@ -1,20 +1,19 @@
 package com.myapp.service.so;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ErrorSo implements Serializable {
+public class ErrorSo {
 
-	private boolean isErrorsExists;
+	private String errorsFound;
 	private Map<String, String> errorMessagesMap = new HashMap<>();
 
-	public boolean isErrorsExists() {
-		return isErrorsExists;
+	public String getErrorsFound() {
+		return errorsFound;
 	}
 
-	public void setErrorsExists(boolean isErrorsExists) {
-		this.isErrorsExists = isErrorsExists;
+	public void setErrorsFound(String errorsFound) {
+		this.errorsFound = errorsFound;
 	}
 
 	public Map<String, String> getErrorMessagesMap() {
