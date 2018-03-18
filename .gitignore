@@ -1,0 +1,15 @@
+.classpath
+.project
+*.log
+*.class
+gen/
+*.7z
+bin/
+target/
+.gradle/
+.settings/
+gradle/
+
+
+
+

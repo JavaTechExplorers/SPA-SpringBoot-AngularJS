@@ -1,28 +1,30 @@
 package com.myapp.service.validator;
 
+import org.springframework.validation.Errors;
+
 public class MyValidationException extends Exception {
 
-	private String errorName;
-	private String errorMsg;
+	private boolean isErrorsExists;
+	private Errors errors;
 
 	public MyValidationException() {
 		super();
 	}
 
-	public String getErrorName() {
-		return errorName;
+	public boolean isErrorsExists() {
+		return isErrorsExists;
 	}
 
-	public void setErrorName(String errorName) {
-		this.errorName = errorName;
+	public void setErrorsExists(boolean isErrorsExists) {
+		this.isErrorsExists = isErrorsExists;
 	}
 
-	public String getErrorMsg() {
-		return errorMsg;
+	public Errors getErrors() {
+		return errors;
 	}
 
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
+	public void setErrors(Errors errors) {
+		this.errors = errors;
 	}
 
 }
