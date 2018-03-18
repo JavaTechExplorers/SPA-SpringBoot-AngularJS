@@ -56,10 +56,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					}
 				}
 
+				System.err.println("User details found in the database for the user (" + username + ")");
+
 				return new User(userEntity.getUsername(), userEntity.getPassword(), grantedAuthorities);
 			}
 			System.err.println("Username = " + username + " not found in database");
-			
+
 			throw new UsernameNotFoundException("Username not found");
 		}
 

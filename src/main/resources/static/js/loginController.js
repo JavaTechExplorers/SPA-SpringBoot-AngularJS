@@ -14,17 +14,26 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
      * it.
      */
     var authenticate = function(callback) {
-	$http.get('user').success(function(data) {
-	    if (data.name) {
+	
+	// alert('Inside authenticate()');
+	
+	$http.get('user').then(function(response) {
+	    
+	    if (response.data.name) {
 		$rootScope.authenticated = true;
 	    } else {
 		$rootScope.authenticated = false;
 	    }
+	    
+	    // If call back exists, then call the function
 	    callback && callback();
-	}).error(function() {
+	    
+	}),function (error){
+	    
 	    $rootScope.authenticated = false;
+	    
 	    callback && callback();
-	});
+	};
     }
 
     authenticate();
@@ -33,14 +42,16 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
 
     $scope.login = function() {
 
-	// alert($scope.credentials);
+	//alert('Inside Login method : username : ' + $scope.credentials.username + " : " + $scope.credentials.password);
 	
 	$http.post('login', $.param($scope.credentials), {
 	    headers : {
 		"content-type" : "application/x-www-form-urlencoded"
 	    }
-	}).success(function(data) {
-		//TODO: $rootScope.authenticated who is setting the variable
+	}).then(function(response) {
+	    
+	    // alert('login response = ' + username);
+	    
 	    authenticate(function() {
 		if ($rootScope.authenticated) {
 		    $location.path("/");
@@ -50,11 +61,11 @@ mySpringApp.controller('loginController', function($rootScope, $scope, $http,$lo
 		    $scope.error = true;
 		}
 	    });
-	}).error(function(data) {
+	}),function (error){
+	    
 	    $location.path("/login");
 	    $scope.error = true;
 	    $rootScope.authenticated = false;
-	})
+	};
     };
-
 });

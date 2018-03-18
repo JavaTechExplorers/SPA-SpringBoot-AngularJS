@@ -19,7 +19,7 @@ public class TestController {
 	@Autowired
 	private UserValidator userValidator;
 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/createAccount1", method = RequestMethod.POST)
 	public ResponseEntity<Object> createAccount(@RequestBody UserSo userSo, BindingResult bindingResult)
 			throws MyValidationException {
 
@@ -31,8 +31,8 @@ public class TestController {
 		if(bindingResult.hasErrors()) {
 			
 			MyValidationException excep = new MyValidationException();
-			excep.setErrorName("Vicky-Error");
-			excep.setErrorMsg("User Name is empty");
+			//excep.setErrorName("Vicky-Error");
+			//excep.setErrorMsg("User Name is empty");
 			
 			// return new ResponseEntity(excep, HttpStatus.OK);
 			throw excep;

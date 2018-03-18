@@ -16,8 +16,8 @@ mySpringApp.controller('dataController',function($scope, $http) {
 			$http.post(urlBase + '/getData', {
 			    empName : 'Vignesh',
 			    empGender : 'Male'
-			}).success(function(data, status, headers) {
-				$scope.dataList = data;
+			}).then(function(response) {
+				$scope.dataList = response.data;
 			});
 	    }
 
@@ -44,7 +44,8 @@ mySpringApp.controller('dataController',function($scope, $http) {
 					empDesc : $scope.empDesc,
 					empGender : $scope.empGender
 				};
-			    $http.post(urlBase + '/save', empDetail).success( function(data, status, headers) {
+			    $http.post(urlBase + '/save', empDetail).then( function(response) {
+				
 			    		//alert('Employee details added');
 			    		listAllEmployees();
 			    });
@@ -66,8 +67,8 @@ mySpringApp.controller('dataController',function($scope, $http) {
 					empDesc : employee.empDesc,
 					empGender : employee.empGender
 				};
-			    $http.post(urlBase + '/delete', empDetail).success( function(data, status, headers) {
-			    		$scope.dataList = data;
+			    $http.post(urlBase + '/delete', empDetail).success( function(response) {
+			    		$scope.dataList = response.data;
 			    });
 	    };
 	    $scope.update = function(employee) {

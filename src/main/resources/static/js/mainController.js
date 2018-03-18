@@ -9,12 +9,12 @@ mySpringApp.controller('mainController', function($rootScope, $scope, $http,$loc
 
 	$location.path("/");
 
-	$http.post('logout', {}).success(function() {
+	$http.post('logout', {}).then(function() {
 	    $rootScope.authenticated = false;
 	    $location.path("/");
-	}).error(function(data) {
+	}),function (error){
 	    $rootScope.authenticated = false;
-	});
+	};
     }
 
     $scope.isLinkActive = function(url) {
