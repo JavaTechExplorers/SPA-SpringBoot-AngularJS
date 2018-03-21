@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +33,11 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/index", "/login", "/createAccount", "/templates/**", "/resources/**", "/js/**",
 						"/lib/**", "/css/**")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/")
-				.and().logout().logoutUrl("/logout");
+				.and().addFilterAfter(new MyCsrfHeaderFilter(), CsrfFilter.class).logout().logoutUrl("/logout");
 
 		// CSRF is disabled. You can enable by introducing CSRF filter.
-		http.csrf().disable();
+		//http.csrf().disable();
+		http.csrf().csrfTokenRepository(csrfTokenRepository());
 	}
 
 	@Autowired
@@ -51,4 +55,17 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// 2. Authentication based on Database
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
+	
+	/**
+	 * The other thing we have to do on the server is tell Spring 
+	 * Security to expect the CSRF token in the format that 
+	 * Angular wants to send it back (a header called “X-XRSF-TOKEN” instead of the 
+	 * default “X-CSRF-TOKEN”). We do this by customizing the CSRF filter:
+	 * @return
+	 */
+	private CsrfTokenRepository csrfTokenRepository() {
+		  HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+		  repository.setHeaderName("X-XSRF-TOKEN");
+		  return repository;
+		}
 }
