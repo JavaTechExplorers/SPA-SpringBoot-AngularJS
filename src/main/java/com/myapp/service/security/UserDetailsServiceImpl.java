@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.myapp.controller.UiController;
 import com.myapp.entity.SysRole;
 import com.myapp.entity.SysUser;
 import com.myapp.entity.SysUserRoleMap;
@@ -24,6 +27,8 @@ import com.myapp.repository.UserRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -34,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		System.out.println("********* UserDetailsServiceImpl:loadUserByUsername(): Username = " + username);
+		LOGGER.info("********* UserDetailsServiceImpl:loadUserByUsername(): Username = " + username);
 
 		if (!StringUtils.isEmpty(username)) {
 
@@ -56,16 +61,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					}
 				}
 
-				System.err.println("User details found in the database for the user (" + username + ")");
+				LOGGER.error("User details found in the database for the user (" + username + ")");
 
 				return new User(userEntity.getUsername(), userEntity.getPassword(), grantedAuthorities);
 			}
-			System.err.println("Username = " + username + " not found in database");
+			LOGGER.error("Username = " + username + " not found in database");
 
 			throw new UsernameNotFoundException("Username not found");
 		}
 
-		System.err.println("Username is mandatory");
+		LOGGER.error("Username is mandatory");
 		throw new UsernameNotFoundException("Username is mandatory");
 	}
 }

@@ -2,6 +2,8 @@ package com.myapp;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -10,6 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.myapp.controller.ProcessController;
 import com.myapp.service.so.ErrorSo;
 import com.myapp.service.validator.MyValidationException;
 
@@ -22,10 +25,12 @@ import com.myapp.service.validator.MyValidationException;
 @ControllerAdvice
 public class MyControllerExceptionHandler {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(MyControllerExceptionHandler.class);
+	
 	@ExceptionHandler(MyValidationException.class)
 	public ResponseEntity<ErrorSo> handleException(MyValidationException e) {
 
-		System.out.println("******************** MyControllerExceptionHandler *******************");
+		LOGGER.info("******************** MyControllerExceptionHandler *******************");
 		ErrorSo errorSo = new ErrorSo();
 		errorSo.setErrorsFound("Y");
 

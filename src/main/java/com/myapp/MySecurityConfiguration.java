@@ -1,5 +1,7 @@
 package com.myapp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @EnableWebSecurity
 public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(MySecurityConfiguration.class);
+	
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -27,7 +31,7 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("*** MySecurityConfiguration *** configure ****");
+		LOGGER.info("*** MySecurityConfiguration *** configure ****");
 
 		http.authorizeRequests()
 				.antMatchers("/", "/index", "/login", "/createAccount", "/templates/**", "/resources/**", "/js/**",
@@ -42,7 +46,7 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("*** MySecurityConfiguration *** configureGlobal ****");
+		LOGGER.info("*** MySecurityConfiguration *** configureGlobal ****");
 
 		/*
 		 * 1. The below is for in-memory authentication for predefined user
@@ -59,8 +63,8 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 	/**
 	 * The other thing we have to do on the server is tell Spring 
 	 * Security to expect the CSRF token in the format that 
-	 * Angular wants to send it back (a header called “X-XRSF-TOKEN” instead of the 
-	 * default “X-CSRF-TOKEN”). We do this by customizing the CSRF filter:
+	 * Angular wants to send it back (a header called ï¿½X-XRSF-TOKENï¿½ instead of the 
+	 * default ï¿½X-CSRF-TOKENï¿½). We do this by customizing the CSRF filter:
 	 * @return
 	 */
 	private CsrfTokenRepository csrfTokenRepository() {

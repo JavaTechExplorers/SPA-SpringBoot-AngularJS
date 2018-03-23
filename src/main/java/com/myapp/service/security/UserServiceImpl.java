@@ -2,6 +2,8 @@ package com.myapp.service.security;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,8 @@ import com.myapp.service.validator.UserValidator;
 @Component
 public class UserServiceImpl implements UserServiceInterface {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -46,7 +50,7 @@ public class UserServiceImpl implements UserServiceInterface {
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(userSo, "userSo");
 		ValidationUtils.invokeValidator(userValidator, userSo, errors);
 		if (errors.getErrorCount() > 0) {
-			System.out.println("Validations error occurred. Account is not created.");
+			LOGGER.error("Validations error occurred. Account is not created.");
 
 			MyValidationException excep = new MyValidationException();
 			excep.setErrorsExists(true);
