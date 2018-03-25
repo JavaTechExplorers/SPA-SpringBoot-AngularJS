@@ -43,11 +43,21 @@
 
 					<li data-ng-class="{active : isLinkActive('/')}"><a href="#/"><i class="fa fa-home"></i>Home</a></li>
 
-					<li  data-ng-class="{active : isLinkActive('/login')}" data-ng-show="!authenticated"><a href="#/login"><i class="fa fa-home"></i> Login</a></li>
+					<li data-ng-class="{active : isLinkActive('/login')}" data-ng-show="!authenticated"><a href="#/login"><i class="fa fa-home"></i> Login</a></li>
 					
-					<li  data-ng-class="{active : isLinkActive('/createAccount')}" data-ng-show="!authenticated"><a href="#/createAccount"><i class="fa fa-home"></i> Create Account</a></li>
+					<li data-ng-class="{active : isLinkActive('/createAccount')}" data-ng-show="!authenticated"><a href="#/createAccount"><i class="fa fa-home"></i> Create Account</a></li>
 
-					<li  data-ng-class="{active : isLinkActive('/data')}" data-ng-show="authenticated" ><a href="#/data"><i class="fa fa-shield"></i> Data Capture</a></li>
+					<li data-ng-class="{active : isLinkActive('/data')}" data-ng-show="authenticated" ><a href="#/data"><i class="fa fa-shield"></i> Data Capture</a></li>
+
+					<li data-ng-class="{active : isLinkActive('/admin')}" data-ng-show="authenticated" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#/admin"><i class="fa fa-shield"></i> Administration</a>
+        				<ul class="dropdown-menu">
+          					
+          					<li data-ng-class="{active : isLinkActive('/sessionTxn')}" data-ng-show="authenticated"><a href="#/sessionTxn">Session Transaction</a></li>
+          					
+          					<!-- <li data-ng-class="{active : isLinkActive('/manageUsers')}" data-ng-show="!authenticated"><a href="#/manageUsers">User Maintenance</a></li>  -->
+        				</ul>
+      				</li>
 
 					<li  data-ng-show="authenticated"><a href="" data-ng-click="logout()">Logout</a></li>
 				</ul>

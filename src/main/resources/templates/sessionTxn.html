@@ -1,0 +1,29 @@
+<div data-ng-show="authenticated" data-ng-controller="sessionTxnController">
+	<h3>Session Transactions:</h3> 
+	
+	<h4>Search Field : </h4><input type="text" data-ng-model="filterCriteria"/>
+	
+	<br/>
+	<h4>Results : </h4>
+	<table class="table table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">User name</th>
+				<th scope="col">Service code</th>
+				<th scope="col">Service Name</th>
+				<th scope="col">Start Time</th>
+				<th scope="col">End Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="data in dataList | filter:filterCriteria">
+				<td>{{ data.userName }}</td>
+				<td>{{ data.serviceCode }}</td>
+				<td>{{ data.serviceMethod }}</td>
+				<td>{{ data.startTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+				<td>{{ data.endTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>

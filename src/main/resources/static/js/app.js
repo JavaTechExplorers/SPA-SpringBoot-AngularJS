@@ -46,6 +46,17 @@ mySpringApp.config(function($routeProvider) {
 	}
     })
 
+    // route for the Session Transaction page
+    .when('/sessionTxn', {
+	templateUrl : '/templates/sessionTxn.html',
+	controller : 'sessionTxnController',
+	resolve : {
+	    js : ['$ocLazyLoad','$http',function($ocLazyLoad,$http){
+		return $ocLazyLoad.load('/js/sessionTxnController.js');
+	    }]
+	}
+    })
+    
     // route for the Data Capture page
     .when('/data', {
 	templateUrl : '/templates/data.html',

@@ -14,22 +14,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myapp.service.EmployeeService;
+import com.myapp.service.SessionTxnService;
 import com.myapp.service.security.UserServiceInterface;
 import com.myapp.service.so.EmployeeSo;
+import com.myapp.service.so.TransactionSo;
 import com.myapp.service.so.UserSo;
 import com.myapp.service.validator.MyValidationException;
-
 
 @RestController
 public class ProcessController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProcessController.class);
-	
+
 	@Autowired
 	private EmployeeService employeeService;
 
 	@Autowired
 	private UserServiceInterface userServiceInterface;
+
+	@Autowired
+	private SessionTxnService sessionTxnService;
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
@@ -59,7 +63,7 @@ public class ProcessController {
 
 		LOGGER.info("*** ProcessController *** createAccount ****");
 		userServiceInterface.save(userSo);
-		
+
 		return new ResponseEntity<UserSo>(userSo, HttpStatus.OK);
 	}
 
@@ -69,4 +73,15 @@ public class ProcessController {
 		List<EmployeeSo> empList = employeeService.getData(employeeSo);
 		return new ResponseEntity<List<EmployeeSo>>(empList, HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/getTxnData", method = RequestMethod.POST)
+	public ResponseEntity<List<TransactionSo>> getSessionTxnData(@RequestBody TransactionSo transactionSo)
+			throws Exception {
+
+		LOGGER.info("*** ProcessController *** getAllData ****");
+		List<TransactionSo> txnList = sessionTxnService.getData(transactionSo);
+		return new ResponseEntity<List<TransactionSo>>(txnList, HttpStatus.OK);
+
+	}
+
 }

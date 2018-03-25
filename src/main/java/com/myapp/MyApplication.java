@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(value = "com.myapp")
@@ -16,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * implementation of the TaskRepository and configure it to talk to a back end in-memory database using JPA.
  */
 @EnableJpaRepositories
+@EnableTransactionManagement
 @SpringBootApplication
 public class MyApplication {
 

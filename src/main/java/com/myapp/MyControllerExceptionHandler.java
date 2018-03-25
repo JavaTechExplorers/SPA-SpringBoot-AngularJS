@@ -12,7 +12,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.myapp.controller.ProcessController;
 import com.myapp.service.so.ErrorSo;
 import com.myapp.service.validator.MyValidationException;
 
