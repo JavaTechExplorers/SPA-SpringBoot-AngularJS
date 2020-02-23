@@ -10,9 +10,6 @@ In this, you will see the following in action.
 - Simple search using Spring JPA
 - CRUD using Spring JPA
 
-The application development has just started with initial features. Watch out this space for more updates!
-
-
 ## Prerequisites
 The following items should be installed in your system:
 
